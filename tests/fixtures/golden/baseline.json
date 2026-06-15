@@ -1,0 +1,5 @@
+{
+  "eval_loss": 4.872628,
+  "eval_harness_version": "1",
+  "note": "toy CPU/fp32 baseline, 50 steps, seed 1337 \u2014 \u00a7A golden path spine"
+}
