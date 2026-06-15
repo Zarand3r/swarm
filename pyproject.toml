@@ -1,0 +1,27 @@
+[project]
+name = "swarm"
+version = "0.1.0"
+description = "DiLoCo from scratch — distributed low-communication training."
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "torch>=2.7",
+    "numpy>=1.26",
+    "tiktoken>=0.7",
+    "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["swarm*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

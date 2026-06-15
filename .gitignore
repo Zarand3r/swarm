@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+*.egg-info/
+.pytest_cache/
+
+# Vendored upstream (cloned transiently, pinned in scripts/clone_nanogpt.sh)
+third_party/
+
+# Data artifacts and run outputs (downloaded/regenerated, never committed).
+# Root-anchored so it ignores ./data only, NOT the swarm/data source package.
+/data/
+results/checkpoints/
+results/logs/
+*.jsonl
+
+# Keep results.tsv tracked? No — it is run output; the committed baseline lives
+# under results/ as an explicit, named file when stamped.
+results/results.tsv

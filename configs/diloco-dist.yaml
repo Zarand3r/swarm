@@ -1,0 +1,35 @@
+# Phase 2 DiLoCo over real collectives (GlooComm), one process per worker.
+# Identical math to diloco-sim.yaml — only the backend differs — so the
+# equivalence gate (sim ≈ gloo) is a true regression test. Used both for local
+# torchrun and the two-host run across the 5 ms link.
+seed: 1337
+backend: gloo
+precision: bf16
+batch_size: 32
+token_budget: 100000000
+eval_every: 1000
+data_dir: data/tinystories
+out_dir: results
+model:
+  n_layer: 8
+  n_head: 8
+  n_embd: 512
+  block_size: 256
+  dropout: 0.0
+  bias: false
+  attn_impl: flash
+optim:
+  inner_lr: 0.0006
+  beta1: 0.9
+  beta2: 0.95
+  weight_decay: 0.1
+  grad_clip: 1.0
+  warmup_steps: 200
+  lr_schedule: cosine
+  min_lr: 0.00006
+diloco:
+  H: 50
+  M: 2
+  outer_lr: 0.7
+  outer_momentum: 0.9
+  nesterov: true

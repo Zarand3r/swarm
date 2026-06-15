@@ -1,0 +1,31 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Set up Python 3.12
+        run: uv python install 3.12
+
+      - name: Create venv and install (CPU torch)
+        run: |
+          uv venv --python 3.12
+          # CI is CPU-only; pull the CPU torch wheel to keep the job light.
+          uv pip install --index-strategy unsafe-best-match \
+            --extra-index-url https://download.pytorch.org/whl/cpu \
+            "torch>=2.7" "numpy>=1.26" "tiktoken>=0.7" "pyyaml>=6.0" "pytest>=8.0"
+          # Add the package itself without re-resolving torch off the default (GPU) index.
+          uv pip install --no-deps -e .
+
+      - name: Run tests (CPU)
+        run: .venv/bin/python -m pytest -q
